@@ -1,0 +1,102 @@
+python -m venv venv
+venv\scripts\activate
+cd NP
+
+
+1) 
+from new.models import *
+s1 = User.objects.create_user('user1') 
+s2 = User.objects.create_user('user2')
+
+2) 
+acc1 = Author.objects.create(user=s1) 
+acc2 = Author.objects.create(user=s2)
+
+3)
+cat1 = Category.objects.create(category = "спорт") 
+cat2 = Category.objects.create(category = "политика") 
+cat3 = Category.objects.create(category = "образование") 
+cat4 = Category.objects.create(category = "торговля")
+
+4) 
+post1 = Post.objects.create(author = acc1, type = article, title = 'Адам Кадыров получил новые награды', text = text1)
+post2 = Post.objects.create(author = acc2, type = article, title = 'Медведев уступил Алькарасу победу в группе и матч с Джоковичем', text = text2)
+post3 = Post.objects.create(author = acc2, type = news, title = 'Россия сняла запрет на экспорт бензина', text = text3)
+
+5)
+post1.category.add(cat2)
+post1.category.add(cat3)
+post2.category.add(cat1)
+post2.category.add(cat2)
+post3.category.add(cat4)
+post3.category.add(cat2)
+
+6)
+comm1 = Comment.objects.create(post = post1, user = s2, text = "норм1")
+comm2 = Comment.objects.create(post = post1, user = s2, text = "норм2")
+comm3 = Comment.objects.create(post = post2, user = s1, text = "норм1")
+comm4 = Comment.objects.create(post = post2, user = s1, text = "норм2")
+comm5 = Comment.objects.create(post = post3, user = s1, text = "норм1")
+comm6 = Comment.objects.create(post = post3, user = s1, text = "норм2")
+
+
+7)
+comm1.like()
+comm1.like()
+comm1.like()
+comm1.like()
+comm1.dislike()
+comm2.like()
+comm2.like()
+comm3.like()
+comm4.like()
+comm4.like()
+comm4.like()
+comm4.like()
+comm4.like()
+comm4.like()
+comm5.like()
+comm5.like()
+comm5.like()
+comm5.like()
+comm6.like()
+comm6.like()
+comm6.like()
+comm6.like()
+comm6.like()
+comm6.like()
+comm6.like()
+comm6.like()
+comm6.like()
+post1.like()
+post1.like()
+post1.like()
+post1.like()
+post1.like()
+post1.like()
+post1.like()
+post1.dislike()
+post2.like()
+post2.like()
+post3.like()
+post3.like()
+post3.like()
+post3.like()
+post3.like()
+
+8)
+acc1.update_rating()
+acc2.update_rating()
+
+9)
+Author.objects.all().order_by('-rating').values('user__username','rating').first()
+
+10)
+postt = Post.objects.all().order_by('-rating').first()
+Post.objects.all().order_by('-rating').values('time_creation','author__user__username','rating','title').first()
+postt.preview()
+
+11)
+Comment.objects.filter(post = postt).values("time_creation","user__username","rating","text")
+
+
